@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Royal Wedding | Pastor David & Joy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif-title { font-family: 'Cinzel', serif; }
+    </style>
+</head>
+<body class="bg-amber-50/40 text-stone-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-amber-100 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="font-serif-title text-xl font-bold tracking-widest text-amber-900 flex items-center gap-2">
+                <i class="fa-solid fa-ring text-amber-600"></i> D & J
+            </a>
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-stone-600">
+                <a href="index.html" class="text-amber-700 font-semibold">Home</a>
+                <a href="#rsvp" class="hover:text-amber-700 transition">RSVP</a>
+                <a href="#biographies" class="hover:text-amber-700 transition">Biographies</a>
+                <a href="#gifts" class="hover:text-amber-700 transition">Gifts & Cash</a>
+                <a href="#contact" class="hover:text-amber-700 transition">Location & Contact</a>
+                <a href="admin.html" class="ml-4 px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 hover:bg-amber-200 text-xs font-semibold flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-shield"></i> Admin Portal
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="flex-grow">
+        <section class="relative py-20 px-4 text-center bg-gradient-to-b from-amber-50 to-white">
+            <div class="max-w-3xl mx-auto">
+                <span class="text-xs uppercase tracking-widest font-semibold text-amber-700 bg-amber-100/80 px-4 py-1.5 rounded-full inline-block mb-4">Celebration of Holy Matrimony</span>
+                <h1 class="font-serif-title text-4xl sm:text-6xl font-extrabold text-stone-900 leading-tight mb-4">
+                    Pastor David & Joy
+                </h1>
+                <p class="text-stone-600 text-lg max-w-xl mx-auto mb-8 font-light">
+                    "Therefore what God has joined together, let no one separate." — Matthew 19:6
+                </p>
+
+                <!-- Countdown -->
+                <div class="grid grid-cols-4 gap-3 max-w-md mx-auto mb-10 text-center">
+                    <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
+                        <span id="days" class="block font-serif-title text-2xl sm:text-3xl font-bold text-amber-800">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-stone-400">Days</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
+                        <span id="hours" class="block font-serif-title text-2xl sm:text-3xl font-bold text-amber-800">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-stone-400">Hours</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
+                        <span id="minutes" class="block font-serif-title text-2xl sm:text-3xl font-bold text-amber-800">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-stone-400">Mins</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl shadow-sm border border-amber-100">
+                        <span id="seconds" class="block font-serif-title text-2xl sm:text-3xl font-bold text-amber-800">00</span>
+                        <span class="text-[10px] uppercase font-semibold text-stone-400">Secs</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#rsvp" class="px-6 py-3 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-medium shadow-md transition">Submit RSVP</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Form -->
+        <section id="rsvp" class="py-16 px-4 max-w-2xl mx-auto">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-amber-100">
+                <h2 class="font-serif-title text-2xl font-bold text-stone-900 mb-2 text-center">RSVP & Guest Messages</h2>
+                <p class="text-xs text-stone-500 text-center mb-6">Submissions sent here save directly into the cloud admin database.</p>
+
+                <form id="publicRsvpForm" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-600 mb-1">Full Name</label>
+                        <input type="text" id="guestName" required placeholder="e.g. Bro. Emmanuel Okafor" class="w-full px-4 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">Phone Number</label>
+                            <input type="tel" id="guestPhone" required placeholder="+234..." class="w-full px-4 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">Attendance Status</label>
+                            <select id="attendance" class="w-full px-4 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <option value="Attending">Joyfully Attending</option>
+                                <option value="Declined">Regretfully Declining</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-600 mb-1">Message / Prayers for the Couple</label>
+                        <textarea id="guestMessage" rows="3" placeholder="Write a warm prayer or congratulatory note..." class="w-full px-4 py-2 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                    </div>
+                    <button type="submit" id="submitBtn" class="w-full py-3 bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold rounded-lg shadow transition flex items-center justify-center gap-2">
+                        <span>Send RSVP & Message</span>
+                    </button>
+                </form>
+
+                <div id="rsvpSuccessAlert" class="hidden mt-4 p-3 bg-emerald-50 text-emerald-700 text-xs rounded-lg text-center font-medium">
+                    Thank you! Your RSVP and message have been securely sent to the wedding database.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 text-xs py-6 text-center border-t border-stone-800">
+        <p>© 2026 Pastor David & Joy Wedding. Dedicated to God's Glory.</p>
+        <p class="mt-1 text-stone-500"><a href="admin.html" class="underline hover:text-amber-400">Access Admin Dashboard</a></p>
+    </footer>
+
+    <script>
+        // --- SUPABASE CONFIGURATION ---
+        // REPLACE THESE TWO STRINGS WITH YOUR SUPABASE DETAILS FROM STEP 1
+        const SUPABASE_URL = 'https://ajgyfftvfgfetvgmlbkg.supabase.co/rest/v1/';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqZ3lmZnR2ZmdmZXR2Z21sYmtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMzg4NzUsImV4cCI6MjEwNzkxNDg3NX0.UA6PWIdsOqpgghAjaOrAahY3SoTppVPWRjn1BcyQvrY';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Countdown Timer
+        const targetDate = new Date('2026-12-19T10:00:00').getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Submit RSVP to Supabase Cloud Database
+        document.getElementById('publicRsvpForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;
+
+            const name = document.getElementById('guestName').value;
+            const phone = document.getElementById('guestPhone').value;
+            const status = document.getElementById('attendance').value;
+            const message = document.getElementById('guestMessage').value;
+
+            const { data, error } = await supabaseClient
+                .from('rsvps')
+                .insert([{ name, phone, status, message }]);
+
+            btn.disabled = false;
+            btn.innerHTML = `<span>Send RSVP & Message</span>`;
+
+            if (error) {
+                alert('Error saving RSVP: ' + error.message);
+            } else {
+                document.getElementById('publicRsvpForm').reset();
+                const alertBox = document.getElementById('rsvpSuccessAlert');
+                alertBox.classList.remove('hidden');
+                setTimeout(() => alertBox.classList.add('hidden'), 5000);
+            }
+        });
+    </script>
+</body>
+</html>
